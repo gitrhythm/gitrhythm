@@ -1,4 +1,10 @@
 Gitrhythm::Application.routes.draw do
+  # Index page
+  root :to => 'blog#index'
+  match 'index(.:format)' => 'blog#index'
+  # Entry page
+  match '/blog/:year/:month/:day/:slug', :to => 'blog#entry', :year => /\d{4}/, :momth => /\d{2}/, :day => /\d{2}/
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

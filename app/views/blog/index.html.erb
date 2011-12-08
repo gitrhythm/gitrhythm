@@ -1,0 +1,12 @@
+<% @entries.each do |entry| %>
+<article>
+  <header>
+    <h2><%= link_to entry.title, entry.rel_url %></h2>
+    <small>published at <%= entry.date %></small>
+  </header>
+  <section>
+    <p><%= raw(entry.summary) %></p>
+  </section>
+</article>
+<% end %>
+
