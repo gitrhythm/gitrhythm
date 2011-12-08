@@ -1,7 +1,6 @@
 # coding: utf-8
 class BlogController < ApplicationController
   def index
-    logger.debug("hogeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
     page = params["page"].to_i
     page = 1 if page < 1
     @entries = Blog.instance.entries(page)
