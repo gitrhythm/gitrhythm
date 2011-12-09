@@ -44,11 +44,11 @@ body > header nav {
   text-transform:uppercase;
 }
 
-body > header ul{
+body > header ul {
   padding-left:0;
 }
 
-body > header li{
+body > header li {
   margin:0 8px;
   display:inline-block;
   color:#2c6f85;
@@ -60,33 +60,33 @@ body > div {
   max-width:736px;
 }
 
-section p a,article p a{
+section p a,article p a {
   text-decoration:underline;
 }
 
-h2 + footer{
+h2 + footer {
   margin-top:-32px;
   color:#6f6f6f;
   font-family:"Palatino","Palatino Linotype",serif;
   font-style:italic;
 }
 
-h2 + footer time{
+h2 + footer time {
   color:#090909;
 }
 
-h2 + footer a[rel="tag"]{
+h2 + footer a[rel="tag"] {
   text-decoration:none;
 }
 
-body > footer{
+body > footer {
   line-height:1;
   background-color:#f4f4f4;
   background-color:rgba(9,9,9,0.08);
   text-align:center;
 }
 
-body > footer address{
+body > footer address {
   margin:96px auto 0 auto;
   padding:24px 16px;
   ;max-width:736px;
@@ -94,7 +94,7 @@ body > footer address{
   text-align:center;
 }
 
-body > footer address a{
+body > footer address a {
   font-family:"Palatino","Palatino Linotype",serif;
   font-style:italic;
 }
