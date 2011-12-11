@@ -1,5 +1,5 @@
 title: 武蔵陵墓地その他に行ってきた
-slug: at-ruins-of-hachioji-castle
+slug: at-musashiryo-bochi
 
 昨日武蔵陵墓地 &gt; 八王子城跡 &gt; 夕焼け小焼けふれあいの里に行って来ました。
 
