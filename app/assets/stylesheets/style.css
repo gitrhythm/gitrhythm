@@ -3,98 +3,98 @@
  */
 
 body > header {
-  margin:0 auto;
-  padding:0 16px;
-  max-width:736px;
-  line-height:1;
-  text-align:center;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 736px;
+  line-height: 1;
+  text-align: center;
 }
 
 body > header > h1 {
-  margin:0 auto;
-  padding:0 16px;
-  padding-top:20px;
-  max-width:736px;
-  font-size:60px;
-  font-family:"Helvetica Neue", Arial, sans-serif;
-  font-weight:100;
-  color:#777;
+  margin: 0 auto;
+  padding: 0 16px;
+  padding-top: 20px;
+  max-width: 736px;
+  font-size: 60px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 100;
+  color: #777;
 }
 
 article > header {
-  padding:0 0 20px 0;
+  padding: 0 0 20px 0;
 }
 
 article > header > small {
-  float:right; /* clear bothがどこかで必要か */
+  float: right; /* clear bothがどこかで必要か */
 }
 
 body > header mark {
-  color:#090909;
-  background-color:transparent;
+  color: #090909;
+  background-color: transparent;
 }
 
 body > header a {
-  color:inherit;
+  color: inherit;
 }
 
 body > header nav {
-  font-family:"Terminal Dosis","Lucida Grande","Lucida Sans Unicode",sans-serif;
-  font-size:87.5%;
-  text-transform:uppercase;
+  font-family: "Terminal Dosis","Lucida Grande","Lucida Sans Unicode",sans-serif;
+  font-size: 87.5%;
+  text-transform: uppercase;
 }
 
 body > header ul {
-  padding-left:0;
+  padding-left: 0;
 }
 
 body > header li {
-  margin:0 8px;
-  display:inline-block;
-  color:#2c6f85;
+  margin: 0 8px;
+  display: inline-block;
+  color: #2c6f85;
 }
 
 body > div {
-  margin:0 auto;
-  padding:0 16px;
-  max-width:736px;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 736px;
 }
 
 section p a,article p a {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 h2 + footer {
-  margin-top:-32px;
-  color:#6f6f6f;
-  font-family:"Palatino","Palatino Linotype",serif;
-  font-style:italic;
+  margin-top: -32px;
+  color: #6f6f6f;
+  font-family: "Palatino","Palatino Linotype",serif;
+  font-style: italic;
 }
 
 h2 + footer time {
-  color:#090909;
+  color: #090909;
 }
 
 h2 + footer a[rel="tag"] {
-  text-decoration:none;
+  text-decoration: none;
 }
 
 body > footer {
-  line-height:1;
-  background-color:#f4f4f4;
-  background-color:rgba(9,9,9,0.08);
-  text-align:center;
+  line-height: 1;
+  background-color: #f4f4f4;
+  background-color: rgba(9,9,9,0.08);
+  text-align: center;
 }
 
 body > footer address {
-  margin:96px auto 0 auto;
-  padding:24px 16px;
-  ;max-width:736px;
-  font-style:normal;
-  text-align:center;
+  margin: 96px auto 0 auto;
+  padding: 24px 16px;
+  max-width: 736px;
+  font-style: normal;
+  text-align: center;
 }
 
 body > footer address a {
-  font-family:"Palatino","Palatino Linotype",serif;
-  font-style:italic;
+  font-family: "Palatino","Palatino Linotype",serif;
+  font-style: italic;
 }
