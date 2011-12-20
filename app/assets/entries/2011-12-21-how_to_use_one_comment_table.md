@@ -1,5 +1,5 @@
 title: 複数のサービスで1つのコメントテーブルを利用する
-slug: how_to_use_one_comment_table_from_plural_services
+slug: how_to_use_one_comment_table
 
 Railsで複数のサービスから1つのコメントテーブルを参照出来ないか？と思って試してみたんだけど、ひとまず1つ目の案が出来たのでメモっておきます。
 
