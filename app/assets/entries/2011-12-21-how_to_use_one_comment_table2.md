@@ -10,7 +10,7 @@ slug: how_to_use_one_comment_table2
 まず、Commentモデルをポリモーフィックなbelongs_to宣言に書き換える。
 <script src="https://gist.github.com/1505127.js?file=comment.rb"></script>
 
-BlogモデルとPhotoモデルではcommentをcommentableとして扱うように書き換える。
+BlogモデルとPhotoモデルでは`:as => commentable`を追加する。
 <script src="https://gist.github.com/1505127.js?file=blog.rb"></script>
 <script src="https://gist.github.com/1505127.js?file=photo.rb"></script>
 
