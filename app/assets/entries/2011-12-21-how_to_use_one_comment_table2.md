@@ -10,30 +10,36 @@ slug: how_to_use_one_comment_table2
 まず、Commentモデルをポリモーフィックなbelongs_to宣言に書き換える。
 <script src="https://gist.github.com/1505127.js?file=comment.rb"></script>
 
-BlogモデルとPhotoモデルもcommentをcommentableとして扱うように書き換える。
+BlogモデルとPhotoモデルではcommentをcommentableとして扱うように書き換える。
 <script src="https://gist.github.com/1505127.js?file=blog.rb"></script>
 <script src="https://gist.github.com/1505127.js?file=photo.rb"></script>
 
-これはCommentモデルからは、BlogもPhotoもcommentableインターフェースとして扱うって感じなんでしょうか・・・。まぁ多分そんな感じかな？と理解しときました。感覚的に名称はcommentableよりもserviceの方が良いかな？って気もするけど、これをインターフェースとして捉えると「コメント可能な何か」ってことでcommentableもありかなって気もするし、先日[@\_\_69\_\_](https://twitter.com/#!/__69__) さんに教えてもらった[act_as_commentable](https://sites.google.com/site/railssiryou/gem/-16-a-commenting-system---part-1-acts_as_commentableno-yi-denamono)でもcommentable使ってるからこれで良いのでしょう。
+これってCommentモデルからは、BlogもPhotoもcommentableインターフェースとして扱うって感じなんでしょうか・・・。多分そんな感じかな？。ところで、感覚的に名称はcommentableよりもserviceの方がしっくりくるかな？って気もするけど、これをインターフェースとして捉えると「コメント可能な何か」って解釈も出来るのでcommentableもありかなって気もする。先日[@\_\_69\_\_](https://twitter.com/#!/__69__) さんに教えてもらった[act_as_commentable](https://sites.google.com/site/railssiryou/gem/-16-a-commenting-system---part-1-acts_as_commentableno-yi-denamono)でも名称としてcommentableを使ってるから、これはこれで良いのでしょう。
 
-で、コメントテーブルは`blog_id`、`photo_id`を削除して`commentable_id`,`commentable_type`を追加する。
+で、コメントテーブルは`blog_id`、`photo_id`を削除して`commentable_id`,`commentable_type` を追加する。
 <script src="https://gist.github.com/1505127.js?file=schema.rb"></script>
 
-Viewで`comment.blog`とか`comment.photo`があれば`comment.commentable`に書き換え、`rake db:reset`して実行。
+最後に、Viewで`comment.blog`とか`comment.photo`の様な記述があれば、それはエラーになるので`comment.commentable`に書き換る。
+
+`rake db:reset`して実行・・・
 
 OK。DBのリファクタリングが旨くいきました。旨く行ったんだけどRailsが何をやってるかいまいちよく分からないので、ログだけでも確認してみる。
 
 `rails c`でコンソール起動
     % rails c
     % ruby-xxx > blog = Blog.find(1)
+    
     SELECT "blogs".* FROM "blogs" WHERE "blogs"."id" = ? LIMIT 1  [["id", 1]] 
+    
     % ruby-xxx > p blog.comments
-    % > SELECT "comments".* FROM "comments"
-        WHERE "comments"."commentable_id" = 1 AND "comments"."commentable_type" = 'Blog'
+    
+    SELECT "comments".* FROM "comments"
+      WHERE "comments"."commentable_id" = 1 AND "comments"."commentable_type" = 'Blog'
 
 Blogから記事を検索して`blog.comments`でコメントを取得しようとすると、commentテーブルへのselectが発行されている。 `Blog.find(1)`で取得したレコードなのでそのIDがcommentable_idに使われ、commentable_typeにはモデルのクラス名が使われているっぽい。 続けてcommentを追加してみる。
 
     % ruby-xxx > blog.comments.create(commenter: 'ore', body: 'comment body.')
+    
     INSERT INTO "comments" ("body", "commentable_id", "commentable_type", 
         "commenter", "created_at", "updated_at") 
     VALUES (?, ?, ?, ?, ?, ?) [["body", "comment body."], ["commentable_id", 1], 
