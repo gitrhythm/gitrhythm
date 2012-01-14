@@ -36,8 +36,7 @@ group :test do
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
 end
-=begin
+
 group :production do
   gem 'therubyracer-heroku', '0.8.1.pre3'
 end
-=end
