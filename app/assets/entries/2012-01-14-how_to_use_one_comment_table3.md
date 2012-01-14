@@ -1,7 +1,7 @@
 title: 複数のサービスで1つのコメントテーブルを利用する(3)
 slug: how_to_use_one_comment_table3
 
-[前回](blog/2011/12/21/how_to_use_one_comment_table2/)から大分間が開いてしまったけど、CommentsControllerがcommentableなモデルのクラス名を取得する方法を幾つか試してみた。 結論から言うとこれと言って良いアイデアは出ませんでした orz  
+[前回](/blog/2011/12/21/how_to_use_one_comment_table2/)から大分間が開いてしまったけど、CommentsControllerがcommentableなモデルのクラス名を取得する方法を幾つか試してみた。 結論から言うとこれと言って良いアイデアは出ませんでした orz  
 以下試してみたことです。
 
 ### resource情報から親コントローラ名を取得出来ないか？
