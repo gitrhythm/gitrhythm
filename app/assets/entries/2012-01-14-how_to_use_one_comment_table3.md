@@ -1,54 +1,32 @@
 title: 複数のサービスで1つのコメントテーブルを利用する(3)
 slug: how_to_use_one_comment_table3
 
-[前回](/blog/2011/12/20/how_to_use_one_comment_table/)の続きで、コメントテーブルのフィールドをリファクタリングしてみる。
+[前回](blog/2011/12/21/how_to_use_one_comment_table2/)から大分間が開いてしまったけど、CommentsControllerがcommentableなモデルのクラス名を取得する方法を幾つか試してみた。 結論から言うとこれと言って良いアイデアは出ませんでした orz  
+以下試してみたことです。
 
-前回はコメントテーブルに`blog_id`と`photo_id`を持っていて、このやり方だとサービスが増減する度にいちいちコメントテーブルに外部キーを追加したり削ったりしないといけないのが嫌なのでした。で、これを外部キーフィールド１つ、サービス名フィールド１にして、この２つをキーとして検索すれば一意にコメントを特定できるんじゃないかと・・・
+### resource情報から親コントローラ名を取得出来ないか？
+コントローラでparams[:id]とかでURLからidを取得できるんだから、route.rbの定義とURLを突き合わせて色々と情報を取得できるAPIでも無いかしら？と思って調べてみた。 がしかし、そのようなAPIは無いみたい。
 
-調べてみるとActiveRecordの[Polymorphic Associations](http://guides.rubyonrails.org/association_basics.html#polymorphic-associations)が利用できそうだと言うことが分かったので試してみる。<small>(実際に参照したのは[ruby/rails/RailsGuidesをゆっくり和訳してみたよ/Active Record Associations](http://wiki.usagee.co.jp/ruby/rails/RailsGuides%E3%82%92%E3%82%86%E3%81%A3%E3%81%8F%E3%82%8A%E5%92%8C%E8%A8%B3%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%82%88/Active%20Record%20Associations#t758e640)だけど・・・)</small>
+paramsメソッドを取っ掛かりとしてコードを追いかけてみると、最終的にrack-mount/route_set.rbに行き着いた。rack-mountが何者なのかいまいち理解出来ていないんだけど、多分こいつがRailsフレームワークを使ったWebアプリの大本である、所謂Rackアプリなんじゃないかと思う。(確証は無いです)
 
-まず、Commentモデルをポリモーフィックなbelongs_to宣言に書き換える。
-<script src="https://gist.github.com/1505127.js?file=comment.rb"></script>
+で、その辺りとかparamsの辺りのコードを大雑把に見てみると、rack-mountがparamsで必要になる情報を環境変数にセットして(paramsそのものだったかも？)、コントローラ側ではその環境変数から値を取得してきているような雰囲気。なので何かルーティング用のAPIが用意されている訳では無いっぽい。
+じゃ、paramsの値をセットするロジックそのものをごっそりコピってごにょごにょすれば良いんじゃね？とも思ったけど、今の自分にはコードが難解過ぎて早々と諦めました hahaha ^_^;)
 
-BlogモデルとPhotoモデルでは`:as => :commentable`を追加する。
-<script src="https://gist.github.com/1505127.js?file=blog.rb"></script>
-<script src="https://gist.github.com/1505127.js?file=photo.rb"></script>
+### コントローラからコントローラ名をhiddenパラメータでセットする
+多分これが一番現実的な方法なんだと思うのだけど、管理者権限でコメントの削除を画面上から出来るようにしたいなぁと思っていて、
 
-これってCommentモデルからは、BlogもPhotoもcommentableインターフェースとして扱うって感じなんでしょうか・・・。多分そんな感じかな？。ところで、感覚的に名称はcommentableよりもserviceの方がしっくりくるかな？って気もするけど、これをインターフェースとして捉えると「コメント可能な何か」って解釈も出来るのでcommentableもありかなって気もする。先日[@\_\_69\_\_](https://twitter.com/#!/__69__) さんに教えてもらった[act_as_commentable](https://sites.google.com/site/railssiryou/gem/-16-a-commenting-system---part-1-acts_as_commentableno-yi-denamono)でも名称としてcommentableを使ってるから、これはこれで良いのでしょう。
+    <%= link_to 'delete', [comment.commentable, comment],
+             'data-commenttype' => 'controller_name',
+             :confirm => 'Are you sure?',                 
+             :method => :delete %>
 
-で、コメントテーブルは`blog_id`、`photo_id`を削除して`commentable_id`,`commentable_type` を追加する。
-<script src="https://gist.github.com/1505127.js?file=schema.rb"></script>
+のようにdata-commenttypeにコントローラ名を渡して、それをサーバ側で取得する方法を試してみた。だけど、どうもそれは出来ないみたい。jquery_ujs.jsのhandleMethodメソッドを読んでみると、独自データ属性を指定してそれをサーバに送るようにはなっていない感じ。<br />
+じゃそれ用のJavaScriptを書くか削除用のformを付けるかすれば良いんだけど、今のところどちらも気分が乗らないのでそれも諦めた (笑)
 
-最後に、Viewで`comment.blog`とか`comment.photo`の様な記述があれば、それはエラーになるので`comment.commentable`に書き換る。
+ってことで、今まで通りURLの特定の位置からコントローラ名を取得する方法に落ち着きました。 でもこの方法は良いやり方だとは思ってないので、多分最終的にはHTMLにコントローラ名をパラメータで渡す方法に落ち着くんだと思う。
 
-`rake db:reset`して実行・・・
+因みにコントローラ名からモデルのインスタンスを生成するには
 
-OK。DBのリファクタリングが旨くいきました。旨く行ったんだけどRailsが何をやってるかいまいちよく分からないので、ログだけでも確認してみる。
+    'controller_names'.classify.constantize
 
-`rails c`でコンソール起動
-    % rails c
-    % ruby-xxx > blog = Blog.find(1)
-    
-    SELECT "blogs".* FROM "blogs" WHERE "blogs"."id" = ? LIMIT 1  [["id", 1]] 
-    
-    % ruby-xxx > p blog.comments
-    
-    SELECT "comments".* FROM "comments"
-      WHERE "comments"."commentable_id" = 1 AND "comments"."commentable_type" = 'Blog'
-
-Blogから記事を検索して`blog.comments`でコメントを取得しようとすると、commentテーブルへのselectが発行されている。 `Blog.find(1)`で取得したレコードなのでそのIDがcommentable_idに使われ、commentable_typeにはモデルのクラス名が使われているっぽい。 続けてcommentを追加してみる。
-
-    % ruby-xxx > blog.comments.create(commenter: 'ore', body: 'comment body.')
-    
-    INSERT INTO "comments" ("body", "commentable_id", "commentable_type", 
-        "commenter", "created_at", "updated_at") 
-    VALUES (?, ?, ?, ?, ?, ?) [["body", "comment body."], ["commentable_id", 1], 
-        ["commentable_type", "Blog"], ["commenter", "ore"], 
-        ["created_at", Wed, 21 Dec 2011 09:30:44 UTC +00:00], 
-        ["updated_at", Wed, 21 Dec 2011 09:30:44 UTC +00:00]]
-
-この様なSQLが発行されていて、やっぱりidは1、commentable_typeにはモデルのクラス名が使われている。`Comment.create(...)の様に直接Commentモデルからコメントデータをインサートしたなら、idとtype]は自前でセットしないといけないんだろうけど、blogから辿った場合は自動でblogインスタンスの情報を元にidとtypeがセットされるみたい。 勿論Blogモデルから`has_many :comments, :as => :commentable`の宣言を削除するとエラーになる。
-
-こんな感じで、コメントのインサート時にはcommentableなモデルのidとtype(モデルクラス名)が書きこまれ、コメント検索時にはそのidとtypeをキーとして検索されている。
-
-DBのリファクタリングはここまでにして、次回はCommentsControllerがcommentableなモデルのクラス名を取得する部分、要はBlogなのかPhotoなのかを判定する部分を、どうにか出来ないか試してみたい。
+のようにすると出来る。 classifyは複数形を単数形にして、更にアンダーバーを取り除いてパスカル記法に沿った名前を生成してくれるっぽい。 constantizeはクラス名文字列からクラスのインスタンスを生成してくれる。コントローラ名が`blog_entries`ならclassifyにより`BlogEntry`になり、constantizeでBlogEntryのインスタンスを生成する。
