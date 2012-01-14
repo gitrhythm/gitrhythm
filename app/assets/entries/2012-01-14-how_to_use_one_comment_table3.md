@@ -1,5 +1,5 @@
-title: 複数のサービスで1つのコメントテーブルを利用する(2)
-slug: how_to_use_one_comment_table2
+title: 複数のサービスで1つのコメントテーブルを利用する(3)
+slug: how_to_use_one_comment_table3
 
 [前回](/blog/2011/12/20/how_to_use_one_comment_table/)の続きで、コメントテーブルのフィールドをリファクタリングしてみる。
 
