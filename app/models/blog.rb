@@ -19,7 +19,7 @@ class Blog
     end
   end
 
-  @@paginate = 5
+  @@paginate = 25
   def entries(page)
     offset = @@paginate * (page - 1) > (self.size - 1) ? @@paginate * (self.page - 1) : @@paginate * (page - 1)
     max = offset + @@paginate > (self.size - 1) ? (self.size - 1) : offset + @@paginate - 1
