@@ -81,3 +81,9 @@ Writing storage configuration to diskダイアログが表示されるので、�
   * system-config-network-tui
   * wget
 * 開発から*開発ツール*を選択し、Subversion, CVS, rcsは当面使う予定は無いので外しておく。
+
+### アップデート
+再起動後、yumでパッケージをアップデートしておく。
+
+    # yum check-update
+    # yum update
