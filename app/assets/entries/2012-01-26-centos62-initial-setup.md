@@ -89,7 +89,6 @@ psでmingettyの数を確認してみると6つ起動しているのを確認出
     root  1394   1  0 01:56 tty4  00:00:00 /sbin/mingetty /dev/tty4
     root  1396   1  0 01:56 tty5  00:00:00 /sbin/mingetty /dev/tty5
     root  1398   1  0 01:56 tty6  00:00:00 /sbin/mingetty /dev/tty6
-    hiro  1427   1403  0 01:57 pts/0    00:00:00 grep tty
     
     $ sudo vi /etc/sysconfig/init
     ACTIVE_CONSOLES=/dev/tty[1-2] <- [1-6]を[1-2]に変更
