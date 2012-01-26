@@ -1,7 +1,7 @@
 title: CentOS 6.2 インストール後の初期設定
 slug: centos62-initial-setup
 
-CentOS 6.2インストール直後の初期設定に関するメモです。
+CentOS 6.2インストール直後の初期設定に関するメモです。ひとまずCentOSをインストールしてSSHで繋がるようになったので、あれこれ初期設定をしておきます。
 
 ### CapsLockとCtrlを入れ替える
 直接コンソールから操作する事は殆ど無いけど、これをしておかないと何気にストレスが溜まるのでやっておく。us.map.gzファイルの内容を書き換えれば良い。keycode 29の`Control`を`Caps_Lock`に、keycode 58の`Control`を`Caps_Lock`にする。
