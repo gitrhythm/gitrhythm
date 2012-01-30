@@ -129,3 +129,7 @@ psでmingettyの数を確認してみると6つ起動しているのを確認出
     alias vi='/usr/bin/vim'
 
 素のviを使いたい場合はフルパスで`/bin/vi`と叩けば良い。
+
+### ChangeLog
+
+* 2012/01/30 vimのインストールを追加した。
