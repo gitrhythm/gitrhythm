@@ -116,3 +116,16 @@ psでmingettyの数を確認してみると6つ起動しているのを確認出
     # vi /etc/sysconfig/selinux
     無効にするにはSELINUXの値を"enforcing"から"disabled"に変更する。
     SELINUX=disabled
+
+### vimのインストール
+インストール直後は`/bin/vi`がインストールされているが、これは色が付かない(と思う)のでvimをインストールする。
+
+    $ sudo yum install vim-enhanced
+
+加えて、viと叩くとvimが起動するようにaliasを切っておく。
+
+    $ vi ~/.bashrc
+    ・・・下記aliasを追加・・・
+    alias vi='/usr/bin/vim'
+
+素のviを使いたい場合はフルパスで`/bin/vi`と叩けば良い。
