@@ -19,7 +19,7 @@ DNSキャッシュサーバと、LAN内部の名前解決用にUnboundをイン�
 * [日本Unboundユーザ会](http://unbound.jp/)
 * [Unbound 知ってる？ この先10年を見据えたDNS - 第2回　Unboundの導入（新規導入編）](http://gihyo.jp/admin/feature/01/unbound/0002)
 
-### やること
+### インデックス
 
 * ldnsのインストール
 * expatのインストール
