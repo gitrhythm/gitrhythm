@@ -1,5 +1,5 @@
 title: CentOS 6.2 ntpd -qで時刻合わせ
-slug: centos62-setup-ntpd
+lug: centos62-setup-ntpd
 
 NTPDの設定をした際のメモです。[こちら](http://www.ivoryworks.com/blog/2008/02/72)によると`ntpdate`の場合、時刻のズレが大きい場合に一気に時間を変更してしまうため、場合によっては環境面で不具合が出る可能性があるのらしい。その点`ntpd`はゆっくり時間を修正してくれるとのこと。サーバの時刻合わせはdaemon化せずにcronから`-q`オプションでntpdを定期的に起動する方法を採用することにしました。<small>(`-q`は時刻合わせが終了次第exitする)</small>
 
@@ -57,7 +57,7 @@ daemon化せず-qで起動するので、クライアントからのパケット
     #restrict 127.0.0.1
     #restrict -6 ::1
 
-driftファイルを作成しオーナー／グループをntpにしておく。値は初期値として0を書きこんでおく。ntp.confには既に`driftfile /var/lib/ntp/drift`と記述されているので、このパスに作成することにする。
+driftファイルを作成しオーナー／グループをntpにしておく。値は初期値として0を書きこんでおく。ntp.confには既に`driftfile /var/lib/ntp/drift`と記述されているので、このパスに作成することにする。<small>(ntpdを起動してもdriftファイルの値が変化しないので、-qで起動する場合、driftファイルは使用されないのかも知れない)</small>
 
     # echo -n "0" > /var/lib/ntp/drift
     # chown ntp:ntp /var/lib/ntp/drift
