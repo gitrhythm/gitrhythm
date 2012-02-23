@@ -1,5 +1,5 @@
-title: CentOS 6 crondとanacronの関係について調べてみた
-slug: centos6-crond-and-anacron
+title: CentOS 6.2 crondとanacronの関係について調べてみた
+slug: centos62-crond-and-anacron
 
 CentOS 6.2ではanacronはデーモンとして動作している訳では無くcronから定期的に呼ばれているようです(6.1以前に関しては未確認です)。crondとanacronの関係が良く分からなかったので、cronの起動から順に大まかな処理の流れについて調べてみました。
 
